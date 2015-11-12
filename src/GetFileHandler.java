@@ -14,8 +14,8 @@ public class GetFileHandler implements IRequestHandler {
 		
 		String[] uri = request.getUri().split("/");
 		String fileName = "";
-		if (uri.length == 3){
-			fileName = uri[2];
+		if (uri.length == 4){
+			fileName = uri[3];
 		}
 		else{
 			return HttpResponseFactory.create400BadRequest(Protocol.CLOSE);
