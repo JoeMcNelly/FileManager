@@ -22,7 +22,7 @@ public class GetFileHandler implements IRequestHandler {
 		}
 		String resourcesDir = "./FileManagerResources/";
 		File file = new File(resourcesDir + fileName);
-		if (file.exists()){
+		if (file.exists() && !file.isDirectory()){
 			response = HttpResponseFactory.create200OK(file, Protocol.CLOSE);
 		}else{
 			response = HttpResponseFactory.create404NotFound(Protocol.CLOSE);
