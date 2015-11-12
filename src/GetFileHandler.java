@@ -17,7 +17,9 @@ public class GetFileHandler implements IRequestHandler {
 		if (uri.length == 4){
 			fileName = uri[3];
 		}
-		else{
+		else if (uri.length == 3){
+			return HttpResponseFactory.create200OK(FileManager.getInstance().getBaseHTML(), Protocol.CLOSE);
+		}else{
 			return HttpResponseFactory.create400BadRequest(Protocol.CLOSE);
 		}
 		String resourcesDir = "./FileManagerResources/";

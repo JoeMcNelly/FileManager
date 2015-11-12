@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,11 +14,35 @@ import protocol.Protocol;
 public class FileManager implements IPlugin {
 
 	private Map<String, IServlet> servlets;
+	private static FileManager instance;
+	private File baseHtml;
+	private static final String DIR_PATH = "./FileManagerResources";
+	private static final String PATH = "/FileManager.html";
 
 	public FileManager() {
 		servlets = new HashMap<String, IServlet>();
 		servlets.put("getAllFiles", new GetAllFilesServlet());
 		servlets.put("file", new GetFileServlet());
+		
+		File dir = new File(DIR_PATH);
+		if (dir.exists()||!dir.isDirectory()){
+			dir.delete();
+			dir.mkdir();
+		}
+		baseHtml = new File(DIR_PATH+PATH);
+		if(baseHtml.exists()){
+			baseHtml.delete();
+		}
+		try {
+			baseHtml.createNewFile();
+			FileOutputStream writer = new FileOutputStream(baseHtml, true);
+			String fileHeader = "USERS: ";
+			writer.write(fileHeader.getBytes());
+			writer.close();
+			
+		} catch (IOException e) {
+		}
+		instance = this;
 	}
 
 	@Override
@@ -29,6 +56,14 @@ public class FileManager implements IPlugin {
 		} catch (Exception e) {
 			return HttpResponseFactory.create400BadRequest(Protocol.CLOSE);
 		}
+	}
+	
+	public static FileManager getInstance() {
+		return instance;
+	}
+	
+	public File getBaseHTML() {
+		return baseHtml;
 	}
 
 }
