@@ -9,25 +9,38 @@ import protocol.IRequestHandler;
 import protocol.Protocol;
 
 public class GetAllFilesHandler implements IRequestHandler {
-	private static final String DIR = System.getProperty("user.dir")
-			+ System.getProperty("file.separator") + "FileMangerResources"
-			+ System.getProperty("file.separator");
+	private static final String DIR = "./FileManagerResources";
+	private static final String PATH = "/getAll.html";
 
 	@Override
 	public HttpResponse handleRequest(HttpRequest request, String rootDir) {
 		HttpResponse response = null;
-		File fileDirectory = new File(DIR);
-		File newFile = new File(DIR + "getAll.html");
-
-		String[] listOfFiles = fileDirectory.list();
+		File dir = new File(DIR);
+		if(dir.exists() || !dir.isDirectory()){
+			dir.delete();
+			dir.mkdirs();
+		}
+		File newFile = new File(DIR + PATH);
+		if(newFile.exists()){
+			newFile.delete();
+		}
+		try {
+			newFile.createNewFile();			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		String[] listOfFiles = dir.list();
 		return appendToFile(newFile, listOfFiles);
 	}
 
 	public HttpResponse appendToFile(File file, String[] listOfFiles) {
 		try {
 			FileOutputStream writer = new FileOutputStream(file, true);
-			for (int i = 0; i < listOfFiles.length; i++) {
-				String contents = new String(listOfFiles[i]);
+			String fileHeader = "<h1> All Files </h1>";
+			writer.write(fileHeader.getBytes());
+			for (int i = 0; i < 10; i++) {
+				String contents = new String("<div> newFile </div>");
 				writer.write(contents.getBytes());
 			}
 			writer.close();

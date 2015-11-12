@@ -12,6 +12,7 @@ public class FileManager implements IPlugin{
 	
 	public FileManager() {
 		servlets = new HashMap<String, IServlet>();
+		servlets.put("getAllFiles", new GetAllFilesServlet());
 	}
 	
 	@Override
