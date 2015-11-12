@@ -3,6 +3,7 @@ import java.util.Map;
 
 import protocol.HttpRequest;
 import protocol.HttpResponse;
+import protocol.HttpResponseFactory;
 import protocol.IRequestHandler;
 import protocol.Protocol;
 import Servlet.IServlet;
@@ -18,7 +19,12 @@ public class GetAllFilesServlet implements IServlet{
 	
 	@Override
 	public HttpResponse handle(HttpRequest request, String rootDir) {
-		return handlers.get(request.getMethod()).handleRequest(request, rootDir);
+		if (handlers.containsKey(request.getMethod())) {
+			return handlers.get(request.getMethod()).handleRequest(request,
+					rootDir);
+		} else {
+			return HttpResponseFactory.create400BadRequest(Protocol.CLOSE);
+		}
 	}
 
 }

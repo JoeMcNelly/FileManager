@@ -17,6 +17,7 @@ public class FileManager implements IPlugin {
 	private static FileManager instance;
 	private File baseHtml;
 	private static final String DIR_PATH = "./FileManagerResources";
+	private static final String PATH = "/FileManager.html";
 
 	public FileManager() {
 		servlets = new HashMap<String, IServlet>();
@@ -28,8 +29,19 @@ public class FileManager implements IPlugin {
 			dir.delete();
 			dir.mkdir();
 		}
-		baseHtml = new File("FileManager.html");
-		
+		baseHtml = new File(DIR_PATH+PATH);
+		if(baseHtml.exists()){
+			baseHtml.delete();
+		}
+		try {
+			baseHtml.createNewFile();
+			FileOutputStream writer = new FileOutputStream(baseHtml, true);
+			String fileHeader = "USERS: ";
+			writer.write(fileHeader.getBytes());
+			writer.close();
+			
+		} catch (IOException e) {
+		}
 		instance = this;
 	}
 
