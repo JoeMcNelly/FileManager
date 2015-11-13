@@ -12,6 +12,9 @@ import protocol.Protocol;
 
 
 public class PutFileHandler  implements IRequestHandler {
+	private static final String WORK_DIR = System.getProperty("user.dir");
+	private static final String DIR_PATH = System.getProperty("file.separator")
+			+ "FileManagerResources" + System.getProperty("file.separator");
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -28,10 +31,7 @@ public class PutFileHandler  implements IRequestHandler {
 		if (uri.length == 4){
 			fileName = uri[3];
 		}
-		File file = new File(rootDir + fileName);
-//		System.out.println(request.getBody());
-		
-		
+		File file = new File(WORK_DIR + DIR_PATH +fileName);
 		if(file.exists()) 
 		{
 			if(file.isDirectory())
@@ -50,12 +50,11 @@ public class PutFileHandler  implements IRequestHandler {
 		}
 		try {
 			file.createNewFile();
-			File newFile = new File(rootDir + uri);
-			FileOutputStream writer = new FileOutputStream(newFile, false);
+			FileOutputStream writer = new FileOutputStream(file, false);
 			Gson gson = new Gson();
 			String json = new String(request.getBody());
-			String bodyContents = gson.fromJson(json, String.class);
-			writer.write(bodyContents.getBytes());
+			RawBody bodyContents = gson.fromJson(json, RawBody.class);
+			writer.write(bodyContents.getContents().getBytes());
 			writer.close();
 		} catch (IOException e) {
 			//e.printStackTrace();

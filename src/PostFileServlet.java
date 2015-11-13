@@ -20,6 +20,7 @@ public class PostFileServlet implements IServlet{
 	@Override
 	public HttpResponse handle(HttpRequest request, String rootDir) {
 		if(handlers.containsKey(request.getMethod())) {
+			System.out.println(request.getMethod());
 			return handlers.get(request.getMethod()).handleRequest(request, rootDir);
 		} else {
 			return HttpResponseFactory.create400BadRequest(Protocol.CLOSE);

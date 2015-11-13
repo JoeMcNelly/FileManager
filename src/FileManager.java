@@ -61,5 +61,8 @@ public class FileManager implements IPlugin {
 	public File getBaseHTML() {
 		return baseHtml;
 	}
+	public static void main(String[] args){
+		
+	}
 
 }
