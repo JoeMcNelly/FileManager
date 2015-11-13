@@ -1,5 +1,4 @@
 import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,8 +25,11 @@ public class FileManager implements IPlugin {
 		servlets = new HashMap<String, IServlet>();
 		servlets.put("getAllFiles", new GetAllFilesServlet());
 		servlets.put("file", new GetFileServlet());
+		servlets.put("delete", new DeleteFileServlet());
+		servlets.put("createNew", new PostFileServlet());
+		servlets.put("appendingToFile", new PutFileServlet());
 
-		File dir = new File(DIR_PATH);
+//		File dir = new File(DIR_PATH);
 		baseHtml = new File(WORK_DIR + DIR_PATH + PATH);
 		if (!baseHtml.exists()) {
 			this.noHTML = true;
