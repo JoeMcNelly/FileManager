@@ -2,6 +2,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import com.google.gson.Gson;
+
 import protocol.HttpRequest;
 import protocol.HttpResponse;
 import protocol.HttpResponseFactory;
@@ -28,6 +30,8 @@ public class PutFileHandler  implements IRequestHandler {
 		}
 		File file = new File(rootDir + fileName);
 //		System.out.println(request.getBody());
+		
+		
 		if(file.exists()) 
 		{
 			if(file.isDirectory())
@@ -48,8 +52,10 @@ public class PutFileHandler  implements IRequestHandler {
 			file.createNewFile();
 			File newFile = new File(rootDir + uri);
 			FileOutputStream writer = new FileOutputStream(newFile, false);
-			String contents = new String(request.getBody());
-			writer.write(contents.getBytes());
+			Gson gson = new Gson();
+			String json = new String(request.getBody());
+			String bodyContents = gson.fromJson(json, String.class);
+			writer.write(bodyContents.getBytes());
 			writer.close();
 		} catch (IOException e) {
 			//e.printStackTrace();

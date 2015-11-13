@@ -2,6 +2,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import com.google.gson.Gson;
+
 import protocol.HttpRequest;
 import protocol.HttpResponse;
 import protocol.HttpResponseFactory;
@@ -28,10 +30,16 @@ public class PostFileHandler implements IRequestHandler {
 			if (file.isDirectory()) {
 				response = HttpResponseFactory.create400BadRequest(Protocol.CLOSE);
 			} else {
-				response = appendToFile(new String(request.getBody()), file);
+				Gson gson = new Gson();
+				String json = new String(request.getBody());
+				String bodyContents = gson.fromJson(json, String.class);
+				response = appendToFile(bodyContents, file);
 			}
 		} else {
-			response = appendToFile(new String(request.getBody()), file);
+			Gson gson = new Gson();
+			String json = new String(request.getBody());
+			String bodyContents = gson.fromJson(json, String.class);
+			response = appendToFile(bodyContents, file);
 		}
 		return response;
 	}
