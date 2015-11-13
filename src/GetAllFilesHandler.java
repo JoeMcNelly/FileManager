@@ -38,10 +38,14 @@ public class GetAllFilesHandler implements IRequestHandler {
 			FileOutputStream writer = new FileOutputStream(file, true);
 			String fileHeader = "<h1> All Files </h1>";
 			writer.write(fileHeader.getBytes());
-			for (int i = 0; i < 10; i++) {
-				String contents = new String("<div> newFile </div>");
+			for (int i = 0; i < listOfFiles.length; i++) {
+				String contents = new String(listOfFiles[i]);
+				writer.write(contents.getBytes());
+				contents = new String("<br>");
 				writer.write(contents.getBytes());
 			}
+			String contents = new String("<br>");
+			writer.write(contents.getBytes());
 			writer.close();
 		} catch (IOException e) {
 			// e.printStackTrace();
