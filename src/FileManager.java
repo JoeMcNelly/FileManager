@@ -15,6 +15,7 @@ public class FileManager implements IPlugin {
 	private Map<String, IServlet> servlets;
 	private static FileManager instance;
 	private File baseHtml;
+	private boolean noHTML;
 	private static final String WORK_DIR = System.getProperty("user.dir");
 	private static final String DIR_PATH = System.getProperty("file.separator")
 			+ "FileManagerResources";
@@ -27,18 +28,11 @@ public class FileManager implements IPlugin {
 		servlets.put("file", new GetFileServlet());
 
 		File dir = new File(DIR_PATH);
-		if (!dir.exists() || !dir.isDirectory()) {
-			dir.delete();
-			dir.mkdir();
-		}
 		baseHtml = new File(WORK_DIR + DIR_PATH + PATH);
 		if (!baseHtml.exists()) {
-			baseHtml.delete();
-		}
-		try {
-			baseHtml.createNewFile();
-		} catch (IOException e) {
-			e.printStackTrace();
+			this.noHTML = true;
+		} else {
+			this.noHTML = false;
 		}
 		instance = this;
 	}
@@ -46,6 +40,9 @@ public class FileManager implements IPlugin {
 	@Override
 	public HttpResponse handle(HttpRequest request, String rootDir) {
 
+		if(this.noHTML) {
+			return HttpResponseFactory.create404NotFound(Protocol.CLOSE);
+		}
 		IServlet servlet;
 		try {
 			String[] uriParts = request.getUri().split("/");
