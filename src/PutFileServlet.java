@@ -15,7 +15,7 @@ public class PutFileServlet implements IServlet{
 	
 	public PutFileServlet() {
 		handlers = new HashMap<String, IRequestHandler>();
-		handlers.put(Protocol.POST, new PutFileHandler());
+		handlers.put(Protocol.PUT, new PutFileHandler());
 	}
 	
 	@Override

@@ -11,7 +11,6 @@ public class GetFileHandler implements IRequestHandler {
 	@Override
 	public HttpResponse handleRequest(HttpRequest request, String rootDir) {
 		HttpResponse response = null;
-		
 		String[] uri = request.getUri().split("/");
 		String fileName = "";
 		if (uri.length == 4){

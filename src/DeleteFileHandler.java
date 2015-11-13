@@ -8,7 +8,7 @@ import protocol.Protocol;
 
 
 public class DeleteFileHandler implements IRequestHandler{
-	private static final String DIR = "./FileManagerResources";
+	private static final String DIR = "./FileManagerResources/";
 	
 	/* (non-Javadoc)
 	 * @see protocol.IRequestHandler#handleRequest(protocol.HttpRequest, java.lang.String)
@@ -17,12 +17,14 @@ public class DeleteFileHandler implements IRequestHandler{
 	public HttpResponse handleRequest(HttpRequest request, String rootDir) {
 
 		HttpResponse response = null;
-		
-		// TODO Auto-generated method stub
-		String uri = request.getUri();
+		String[] uri = request.getUri().split("/");
+		String fileName = "";
+		if (uri.length == 4){
+			fileName = uri[3];
+		}
 		// Get root directory path from server
 		// Combine them together to form absolute file path
-		File file = new File(DIR + uri);
+		File file = new File(DIR + fileName);
 		// Check if the file exists
 		if(file.exists()) {
 			if(file.isDirectory()) {

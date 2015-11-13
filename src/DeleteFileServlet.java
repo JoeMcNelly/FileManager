@@ -14,7 +14,7 @@ public class DeleteFileServlet implements IServlet {
 
 	public DeleteFileServlet() {
 		handlers = new HashMap<String, IRequestHandler>();
-		handlers.put(Protocol.POST, new DeleteFileHandler());
+		handlers.put(Protocol.DELETE, new DeleteFileHandler());
 	}
 
 	@Override
