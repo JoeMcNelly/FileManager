@@ -26,7 +26,11 @@ public class GetFileHandler implements IRequestHandler {
 		if (file.exists() && !file.isDirectory()){
 			response = HttpResponseFactory.create200OK(file, Protocol.CLOSE);
 		}else{
-			response = HttpResponseFactory.create404NotFound(Protocol.CLOSE);
+			String dir = System.getProperty("user.dir");
+			File file404 = new File(dir + System.getProperty("file.separator") + "web"
+					+ System.getProperty("file.separator") + "404message.txt"
+					+ System.getProperty("file.separator"));
+			response = HttpResponseFactory.create200OK(file404, Protocol.CLOSE);
 		}
 		return response;
 	}

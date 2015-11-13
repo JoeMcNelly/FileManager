@@ -56,6 +56,7 @@ public class PutFileHandler  implements IRequestHandler {
 			RawBody bodyContents = gson.fromJson(json, RawBody.class);
 			writer.write(bodyContents.getContents().getBytes());
 			writer.close();
+			response = HttpResponseFactory.create200OK(file, Protocol.CLOSE);
 		} catch (IOException e) {
 			//e.printStackTrace();
 			return HttpResponseFactory.create400BadRequest(Protocol.CLOSE);
