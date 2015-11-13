@@ -21,9 +21,13 @@ public class PutFileHandler  implements IRequestHandler {
 
 		HttpResponse response = null;
 		
-		String uri = request.getUri();
-		File file = new File(rootDir + uri);
-		
+		String[] uri = request.getUri().split("/");
+		String fileName = "";
+		if (uri.length == 4){
+			fileName = uri[3];
+		}
+		File file = new File(rootDir + fileName);
+//		System.out.println(request.getBody());
 		if(file.exists()) 
 		{
 			if(file.isDirectory())

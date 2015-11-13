@@ -26,8 +26,8 @@ public class FileManager implements IPlugin {
 		servlets.put("getAllFiles", new GetAllFilesServlet());
 		servlets.put("file", new GetFileServlet());
 		servlets.put("delete", new DeleteFileServlet());
-		servlets.put("createNew", new PostFileServlet());
-		servlets.put("appendingToFile", new PutFileServlet());
+		servlets.put("createNew", new PutFileServlet());
+		servlets.put("appendingToFile", new PostFileServlet());
 		
 		baseHtml = new File(WORK_DIR + DIR_PATH + PATH);
 		if (!baseHtml.exists()) {
