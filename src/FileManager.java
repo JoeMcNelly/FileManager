@@ -16,7 +16,7 @@ public class FileManager implements IPlugin {
 	private Map<String, IServlet> servlets;
 	private static FileManager instance;
 	private File baseHtml;
-	private static final String DIR_PATH = "./FileManagerResources";
+	private static final String DIR_PATH = "/web";
 	private static final String PATH = "/FileManager.html";
 
 	public FileManager() {
@@ -36,8 +36,6 @@ public class FileManager implements IPlugin {
 		try {
 			baseHtml.createNewFile();
 			FileOutputStream writer = new FileOutputStream(baseHtml, true);
-			String fileHeader = "USERS: ";
-			writer.write(fileHeader.getBytes());
 			writer.close();
 			
 		} catch (IOException e) {
@@ -63,6 +61,7 @@ public class FileManager implements IPlugin {
 	}
 	
 	public File getBaseHTML() {
+		System.out.println("baseHTML: "+baseHtml.getAbsolutePath());
 		return baseHtml;
 	}
 

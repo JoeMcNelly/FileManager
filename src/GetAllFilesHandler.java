@@ -14,7 +14,6 @@ public class GetAllFilesHandler implements IRequestHandler {
 
 	@Override
 	public HttpResponse handleRequest(HttpRequest request, String rootDir) {
-		HttpResponse response = null;
 		File dir = new File(DIR);
 		if(dir.exists() || !dir.isDirectory()){
 			dir.delete();
